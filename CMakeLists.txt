@@ -9,4 +9,10 @@ add_executable(untitled main.cpp
         Token.cpp
         Token.h
         Lexer.cpp
-        Lexer.h)
+        Lexer.h
+        ast/Expression.cpp
+        ast/Expression.h
+        ast/NumberExpression.cpp
+        ast/NumberExpression.h
+        Parser.cpp
+        Parser.h)

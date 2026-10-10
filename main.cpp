@@ -4,14 +4,14 @@
 #include <vector>
 
 #include "Lexer.h"
+#include "Parser.h"
 #include "Token.h"
 
 
 int main() {
-    const std::string source = "player1+3425-player+-228";
+    const std::string source = "42";
     Lexer lexer(source);
-
-    for (auto tokens = lexer.tokenize(); const auto& token : tokens) {
-        std::cout << token.value << std::endl;
-    }
+    auto tokens = lexer.tokenize();
+    Parser parser(tokens);
+    std::cout << parser.parseNumber().getValue() << std::endl;
 }

@@ -4,5 +4,12 @@ enum class TokenType {
     Identifier,
     Number,
     Operator,
+    LeftParen,
+    RightParen,
+    LeftBrace,
+    RightBrace,
+    LeftBracket,
+    RightBracket,
+    Comma,
 };
 
