@@ -14,14 +14,12 @@ std::unique_ptr<Expression> Parser::parseExpression() {
         throw std::runtime_error("Parser error: expected number, but reached end of input");
     }
     if (tokens[pos].type == TokenType::Number) {
-        auto exp = std::make_unique<NumberExpression>(std::stoi(tokens[pos].value));
-        pos++;
-        return exp;
+        return parseNumber();
     }
     throw std::runtime_error("Parser error: expected number");
 }
 
-NumberExpression Parser::parseNumber() {
+std::unique_ptr<NumberExpression> Parser::parseNumber() {
     if (pos >= tokens.size()) {
         throw std::runtime_error("Parser error: expected number, but reached end of input");
     }
@@ -29,6 +27,7 @@ NumberExpression Parser::parseNumber() {
         throw std::runtime_error("Parser error: expected number");
     }
     auto exp = NumberExpression(std::stoi(tokens[pos].value));
+    auto final = std::make_unique<NumberExpression>(std::stoi(tokens[pos].value));
     pos++;
-    return exp;
+    return final;
 }

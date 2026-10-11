@@ -13,7 +13,7 @@ class Parser {
 public:
     explicit Parser(const std::vector<Token> &tokens);
 
-    NumberExpression parseNumber();
+    std::unique_ptr<NumberExpression> parseNumber();
     std::unique_ptr<Expression> parseExpression();
 
 private:
