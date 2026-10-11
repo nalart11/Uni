@@ -20,6 +20,5 @@ class BinaryExpression : public Expression {
 
     Expression* getLeft() const;
     Expression* getRight() const;
-
     const std::string &getOperator() const;
 };

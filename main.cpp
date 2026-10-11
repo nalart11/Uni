@@ -8,30 +8,16 @@
 
 
 int main() {
-    const std::string source = "42";
+    const std::string source = "2 + 3";
     Lexer lexer(source);
-    auto tokens = lexer.tokenize();
+    const auto tokens = lexer.tokenize();
     Parser parser(tokens);
-    std::cout << parser.parseNumber().getValue() << std::endl;
-
-    std::unique_ptr<Expression> left = std::make_unique<NumberExpression>(2);
-    std::unique_ptr<Expression> right = std::make_unique<NumberExpression>(3);
-    std::unique_ptr<Expression> expression = std::make_unique<BinaryExpression>(
-        std::move(left), "*", std::move(right)
-        );
-    auto* binary = dynamic_cast<BinaryExpression*>(expression.get());
-    if (binary == nullptr) {
-        std::cout << "Expression is not BinaryExpression";
-        return 1;
-    }
-    const auto* leftNumber = dynamic_cast<const NumberExpression*>(binary->getLeft());
-    const auto* rightNumber = dynamic_cast<const NumberExpression*>(binary->getRight());
-    const auto& op = binary->getOperator();
-    if (leftNumber != nullptr) {
-        std::cout << "Left: " << leftNumber->getValue() << '\n';
-    }
-    std::cout << "Operator: " << op << '\n';
-    if (rightNumber != nullptr) {
-        std::cout << "Right: " << rightNumber->getValue() << '\n';
-    }
+    const auto expression = parser.parseExpression();
+    const auto* binary = dynamic_cast<BinaryExpression*>(expression.get());
+    const auto left = dynamic_cast<NumberExpression*>(binary->getLeft());
+    const auto right = dynamic_cast<NumberExpression*>(binary->getRight());
+    const auto op = binary->getOperator();
+    std::cout << left->getValue() << std::endl;
+    std::cout << op << std::endl;
+    std::cout << right->getValue() << std::endl;
 }
