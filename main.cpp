@@ -8,16 +8,13 @@
 
 
 int main() {
-    const std::string source = "2 + 3";
+    const std::string source = "10 - 2 - 3";
     Lexer lexer(source);
     const auto tokens = lexer.tokenize();
     Parser parser(tokens);
     const auto expression = parser.parseExpression();
     const auto* binary = dynamic_cast<BinaryExpression*>(expression.get());
-    const auto left = dynamic_cast<NumberExpression*>(binary->getLeft());
+    const auto left = dynamic_cast<BinaryExpression*>(binary->getLeft());
     const auto right = dynamic_cast<NumberExpression*>(binary->getRight());
-    const auto op = binary->getOperator();
-    std::cout << left->getValue() << std::endl;
-    std::cout << op << std::endl;
-    std::cout << right->getValue() << std::endl;
+    std::cout << left->getLeft() << left->getOperator() << right->getValue() << std::endl;
 }

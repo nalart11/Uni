@@ -15,6 +15,7 @@ public:
 
     std::unique_ptr<NumberExpression> parseNumber();
     std::unique_ptr<Expression> parseExpression();
+    std::unique_ptr<Expression> parseTerm();
 
 private:
     const std::vector<Token>& tokens;
