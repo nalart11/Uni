@@ -19,11 +19,12 @@ bool Lexer::isOperator(const char c) {
            c == '*' ||
            c == '/' ||
            c == '%' ||
-           c == '^';
+           c == '^' ||
+           c == '=';
 }
 
 bool Lexer::isKeyword(const std::string& value) {
-    return value == "print";
+    return value == "print" || value == "val";
 }
 
 bool Lexer::isParen(const char c) {
@@ -68,7 +69,7 @@ Token Lexer::readOperator() {
 
 Token Lexer::readParen() {
     std::string value;
-    TokenType tokenType;
+    TokenType tokenType = {};
     switch (source[pos]) {
         case '(':
             tokenType = TokenType::LeftParen;
@@ -138,6 +139,11 @@ std::vector<Token> Lexer::tokenize() {
         } else if (isBracket(source[pos])) {
             tokens.push_back(readBracket());
         } else if (isspace(source[pos])) {
+            if (source[pos] == '\n') {
+                tokens.push_back({TokenType::NewLine, "\n"});
+                pos++;
+                continue;
+            }
             pos++;
         } else {
             std::cout << "Unexpected character \'" << source[pos] << "\' at pos " << pos + 1 << std::endl;

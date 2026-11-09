@@ -17,4 +17,16 @@ add_executable(untitled main.cpp
         Parser.cpp
         Parser.h
         ast/BinaryExpression.cpp
-        ast/BinaryExpression.h)
+        ast/BinaryExpression.h
+        Evaluator.cpp
+        Evaluator.h
+        ast/Statement.cpp
+        ast/Statement.h
+        ast/PrintStatement.cpp
+        ast/PrintStatement.h
+        ast/VariableDeclaration.cpp
+        ast/VariableDeclaration.h
+        ast/IdentifierExpression.cpp
+        ast/IdentifierExpression.h
+        Enviroment.cpp
+        Enviroment.h)

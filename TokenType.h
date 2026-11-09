@@ -11,5 +11,6 @@ enum class TokenType {
     LeftBracket,
     RightBracket,
     Comma,
+    NewLine,
 };
 
