@@ -14,7 +14,7 @@ class Evaluator {
     public:
     Evaluator();
 
-    static int evaluate(const Expression* expression);
-    static void execute(const Statement* statement);
+    int evaluate(const Expression* expression);
+    void execute(const Statement* statement);
 };
 

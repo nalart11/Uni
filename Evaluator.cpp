@@ -11,6 +11,8 @@
 #include "ast/BinaryExpression.h"
 #include "ast/NumberExpression.h"
 #include "ast/PrintStatement.h"
+#include "ast/IdentifierExpression.h"
+#include "ast/VariableDeclaration.h"
 
 Evaluator::Evaluator() = default;
 
@@ -23,6 +25,7 @@ static void checkDivisor(int num) {
 int Evaluator::evaluate(const Expression* expression) {
     const auto* number = dynamic_cast<const NumberExpression*>(expression);
     const auto* binary = dynamic_cast<const BinaryExpression*>(expression);
+    const auto* identifier = dynamic_cast<const IdentifierExpression*>(expression);
 
     if (number != nullptr) {
         return number->getValue();
@@ -48,16 +51,26 @@ int Evaluator::evaluate(const Expression* expression) {
                 throw std::runtime_error("Unexpected operator");
         }
     }
+    if (identifier != nullptr) {
+        return environment.get(identifier->getName());
+    }
 
     throw std::runtime_error("Unexpected expression type");
 }
 
 void Evaluator::execute(const Statement* statement) {
-    const auto* printStatement = dynamic_cast<const PrintStatement*>(statement);
-    if (printStatement == nullptr) {
-        throw std::runtime_error("Unexpected statement type");
+    if (const auto* printStatement = dynamic_cast<const PrintStatement*>(statement); printStatement != nullptr) {
+        std::cout << evaluate(printStatement->getExpression()) << '\n';
+        return;
     }
-    auto expression = printStatement->getExpression();
-    int result = evaluate(expression);
-    std::cout << result << std::endl;
+
+    if (const auto* declaration = dynamic_cast<const VariableDeclaration*>(statement); declaration != nullptr) {
+        const auto& name = declaration->getName();
+        const auto* expression = declaration->getInitializer();
+
+        environment.define(name, evaluate(expression));
+        return;
+    }
+
+    throw std::runtime_error("Unexpected statement type");
 }

@@ -29,15 +29,16 @@ static void printExpression(const Expression* expression) {
 int main() {
     const std::string source =
     "print 10 + 5\n"
-    "\n"
-    "print 20 * 3\n"
-    "print (100 - 40) / 2";
+    "val lol = 25 + 35\n"
+    "print(lol)";
     Lexer lexer(source);
     const auto tokens = lexer.tokenize();
     Parser parser(tokens);
     auto statements = parser.parseProgram();
 
+    Evaluator evaluator;
+
     for (const auto& statement : statements) {
-        Evaluator::execute(statement.get());
+        evaluator.execute(statement.get());
     }
 }
